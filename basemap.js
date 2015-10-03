@@ -1,3 +1,6 @@
+function myelement(name) {
+	return document.getElementById(name);
+}
 function show_validation() {
 	document.getElementById("contenu").innerHTML=" Contenu Validé ";
 }
@@ -34,10 +37,10 @@ function get_LatitudeLongitude(element) {
 
 	var url = make_url(source, "gmap");
 	$.getJSON(url, function(data) {
-		glat=data.results[0].geometry.location.lat;
-		glong=data.results[0].geometry.location.lng;
-		document.getElementById("latdivgmap").innerHTML=glat;
-		document.getElementById("longdivgmap").innerHTML=glong;
+		latitude=data.results[0].geometry.location.lat;
+		longitude=data.results[0].geometry.location.lng;
+		document.getElementById("latdivgmap").innerHTML=latitude;
+		document.getElementById("longdivgmap").innerHTML=longitude;
 	});
 		
 	
