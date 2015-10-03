@@ -8,7 +8,7 @@
 <h2>Avec form, input et textarea</h2>
 <form id="form" onSubmit="valider(); return false;">
 <label>Nom Prénom : </label><input type="text" id="name" name="Nom Prénom" value="Ajouter"></br>
-<label>Adresse :  </label><textarea id="address" name="Adresse" rows=4 onchange="osmdiv(this)">Ajouter</textarea></br>
+<label>Adresse :  </label><textarea id="address" name="Adresse" rows=4 onchange="get_LatitudeLongitude(this)">Ajouter</textarea></br>
 <input type="submit" value="Valider" class="valid">
 <p>Rentrez votre adresse et appuyez sur [Tab]</p>
 </form>
@@ -27,7 +27,7 @@
 <div class=tableft>
 <h2>En div contenteditable et oninput</h2>
 <label>Nom Prenom </label> <div id="namediv" contenteditable="true">Ajouter </div><br/>
-<label>Adresse </label> <div id="addressdiv" contenteditable="true" oninput="osmdiv(this)">Ajouter </div><br/>
+<label>Adresse </label> <div id="addressdiv" contenteditable="true" oninput="get_LatitudeLongitude(this)">Ajouter </div><br/>
 <div id="validerdiv" class="valid" onclick="valider()">Valider</div><br/>
 <p>Rentrez votre adresse et appuyez sur [Tab]</p>
 </div>
