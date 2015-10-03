@@ -8,25 +8,25 @@ function make_url(type,data) {
 	switch (type) {
 		case "url_osm":
 			url="http://nominatim.openstreetmap.org/search?";
-			key="email=jerome.avond@alolise.org";
-			format="format=json";
-			base= url + key + "&" + format + "&q=" + address;
+			key="email=" + data["key"] ; jerome.avond@alolise.org";
+			format="format=" + data["format"];  json";
+			base= url + key + "&" + format + "&q=" + data["address"];
 			break;
 		case "url_gmap":
 			url="https://maps.googleapis.com/maps/api/geocode/";
-			key="key=AIzaSyBV0jQvMpkmQ2QINkntL7liDvooxYt-WfQ";
-			format="json?";
-			base= url + format + key + "&address=" + address; 
+			key="key=" + data["key"]; AIzaSyBV0jQvMpkmQ2QINkntL7liDvooxYt-WfQ";
+			format=data["format"] + "?";
+			base= url + format + key + "&address=" + data["address"];
 			break;
 		case "map_osm":
 			url = "http://www.openstreetmap.org/export/embed.html?"
-			longitude_min=longitude - delta_horizontal;
-			latitude_min=latitude - delta_vertical;
-			longitude_max=longitude + delta_horizontal;
-			latitude_max=latitude + delta_vertical;
+			longitude_min=data["longitude"] - data["delta_horizontal"];
+			latitude_min=data["latitude"] - data["delta_vertical"];
+			longitude_max=data["longitude"] + data["delta_horizontal"];
+			latitude_max=data["latitude"] + data["delta_vertical"];
 			box = "bbox=" + longitude_min + "," + latitude_min + "," + longitude_max + "," + latitude_max;
 			layer = "&" + "layer=mapquest";
-			marker = "&" + "marker=" + latitude + "," + longitude;
+			marker = "&" + "marker=" + data["latitude"] + "," + data["longitude"];
 			break;
 			//maposm="http://api.openstreetmap.org/api/0.6/map?bbox="+bolon1+","+bolat2+","+bolon2+","+bolat3;
 	}
