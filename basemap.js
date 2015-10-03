@@ -1,7 +1,23 @@
 function show_validation() {
 	document.getElementById("contenu").innerHTML=" Contenu Validé ";
 }
-function getLatitudeLongitude(element) {
+function make_url(address,type,key="",format="json") {
+	switch (type) {
+		case "osm":
+			url="http://nominatim.openstreetmap.org/search?";
+			key="email=jerome.avond@alolise.org";
+			format="format=json";
+			base= url + key + "&" + format + "&q=" + address;
+			break;
+		case "gmap":
+			url="https://maps.googleapis.com/maps/api/geocode/";
+			key="key=AIzaSyBV0jQvMpkmQ2QINkntL7liDvooxYt-WfQ";
+			format="json?";
+			base= url + format + key + "&address=" + address; 
+			break;
+	}
+}
+function get_LatitudeLongitude(element) {
 
 	switch (element.tag) {
 		case "DIV":
@@ -15,11 +31,9 @@ function getLatitudeLongitude(element) {
 	}
 
 	var xmlhttp = new XMLHttpRequest();
-	var urlosm = "http://nominatim.openstreetmap.org/search?email=jerome.avond@alolise.org&format=json&q=" + source ;
-	var urlgmp = "https://maps.googleapis.com/maps/api/geocode/json?address=" + source + "&key=AIzaSyBV0jQvMpkmQ2QINkntL7liDvooxYt-WfQ";
 
-	$.getJSON(urlgmp, function(data) {
-		//document.getElementById("contenu").innerHTML=data.results[0].formatted_address;
+	var url = make_url(source, "gmap");
+	$.getJSON(url, function(data) {
 		glat=data.results[0].geometry.location.lat;
 		glong=data.results[0].geometry.location.lng;
 		document.getElementById("latdivgmap").innerHTML=glat;
@@ -27,7 +41,8 @@ function getLatitudeLongitude(element) {
 	});
 		
 	
-	$.getJSON(urlosm, function(data) {
+	url = make_url(source, "osm");
+	$.getJSON(url, function(data) {
 		olat=data[0].lat;
 		olon=data[0].lon;
 		deltav=0.05;
