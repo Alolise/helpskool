@@ -1,7 +1,7 @@
 function show_validation() {
 	document.getElementById("contenu").innerHTML=" Contenu Validé ";
 }
-function osmdiv(element) {
+function getLatitudeLongitude(element) {
 	if (element.tag == "DIV") {
 		source = element.innerHTML;
 	} else if (element.tag == "TEXTAREA") {
