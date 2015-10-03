@@ -5,13 +5,22 @@
 </head>
 <body>
 <div class=tableft>
+<div class=box>
+<h2>En div contenteditable et oninput</h2>
+<label>Nom Prenom </label> <div id="namediv" contenteditable="true">Ajouter </div><br/>
+<label>Adresse </label> <div id="addressdiv" contenteditable="true" oninput="get_LatitudeLongitude(this)">Ajouter </div><br/>
+<div id="validerdiv" class="valid" onclick="valider()">Valider</div><br/>
+<p>Rentrez votre adresse et appuyez sur [Tab]</p>
+</div>
+<div class=box>
 <h2>Avec form, input et textarea</h2>
-<form id="form" onSubmit="valider(); return false;">
+<form id="form" onSubmit="show_validation(); return false;">
 <label>Nom Prénom : </label><input type="text" id="name" name="Nom Prénom" value="Ajouter"></br>
 <label>Adresse :  </label><textarea id="address" name="Adresse" rows=4 onchange="get_LatitudeLongitude(this)">Ajouter</textarea></br>
 <input type="submit" value="Valider" class="valid">
 <p>Rentrez votre adresse et appuyez sur [Tab]</p>
 </form>
+</div>
 </div>
 <div class=tableft>
 <div class=box>
@@ -24,14 +33,10 @@
 <iframe class=box id="carte" src="http://www.openstreetmap.org/export/embed.html?bbox=0.33856,46.58097,0.34742,46.58438&amp;layer=mapquest&amp;marker=46.58143,0.33957"></iframe><br />
 <div class=box><a href="http://www.openstreetmap.org/?lat=46.582675&amp;lon=0.34299&amp;zoom=16&amp;layers=Q&amp;mlat=46.58143&amp;mlon=0.33957">Voir une carte plus grande</a></div>
 </div>
+<!--
 <div class=tableft>
-<h2>En div contenteditable et oninput</h2>
-<label>Nom Prenom </label> <div id="namediv" contenteditable="true">Ajouter </div><br/>
-<label>Adresse </label> <div id="addressdiv" contenteditable="true" oninput="get_LatitudeLongitude(this)">Ajouter </div><br/>
-<div id="validerdiv" class="valid" onclick="valider()">Valider</div><br/>
-<p>Rentrez votre adresse et appuyez sur [Tab]</p>
-</div>
 <div id="demoMap" style="height:250px"></div>
+-->
 <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 <script src="ol.js"></script>
 <script src="basemap.js"></script>

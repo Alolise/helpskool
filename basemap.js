@@ -27,6 +27,7 @@ function make_url(type,data) {
 			box = "bbox=" + longitude_min + "," + latitude_min + "," + longitude_max + "," + latitude_max;
 			layer = "&" + "layer=mapquest";
 			marker = "&" + "marker=" + data["latitude"] + "," + data["longitude"];
+			base = url + box + layer + marker;
 			break;
 			//maposm="http://api.openstreetmap.org/api/0.6/map?bbox="+bolon1+","+bolat2+","+bolon2+","+bolat3;
 	}
@@ -72,19 +73,23 @@ function get_LatitudeLongitude(element) {
 	}
 	url = make_url("url_osm",geodata_osm);
 	$.getJSON(url, function(data) {
-		geodata = {
+		if (data.length == 0) {
+			alert("Adresse Inconnue!");
+			return 0;
+		}
+		geodata_map = {
 				"latitude": data[0].lat,
 				"longitude": data[0].lon,
 				"delta_vertical": 0.05,
 				"delta_horizontal": 0.05
 		}
 		
+//			alert(geodata_map["latitude"]);
 		myelement("latdivosm").innerHTML=geodata["latitude"];
 		myelement("longdivosm").innerHTML=geodata["longitude"];
-		url = make_url("map_osm",geodata);
-		myelement("carte").src=url;
-		myelement("contenu").innerHTML=url;
-
+		map = make_url("map_osm",geodata_map);
+		myelement("carte").src=map;
+		myelement("contenu").innerHTML=map;
 	});
 
 //	myelement('carte').contentWindow.location.reload(true); can't no authorization
