@@ -8,13 +8,13 @@ function make_url(type,data) {
 	switch (type) {
 		case "url_osm":
 			url="http://nominatim.openstreetmap.org/search?";
-			key="email=" + data["key"] ; jerome.avond@alolise.org";
-			format="format=" + data["format"];  json";
+			key="email=" + data["key"] ;
+			format="format=" + data["format"];
 			base= url + key + "&" + format + "&q=" + data["address"];
 			break;
 		case "url_gmap":
 			url="https://maps.googleapis.com/maps/api/geocode/";
-			key="key=" + data["key"]; AIzaSyBV0jQvMpkmQ2QINkntL7liDvooxYt-WfQ";
+			key="key=" + data["key"];
 			format=data["format"] + "?";
 			base= url + format + key + "&address=" + data["address"];
 			break;
@@ -47,7 +47,12 @@ function get_LatitudeLongitude(element) {
 
 	var xmlhttp = new XMLHttpRequest();
 
-	var url = make_url("url_gmap",source);
+	geodata_gmap= {
+			"address": source,
+			"key": "AIzaSyBV0jQvMpkmQ2QINkntL7liDvooxYt-WfQ",
+			"format": "json"
+	}
+	var url = make_url("url_gmap",geodata_gmap);
 	$.getJSON(url, function(data) {
 		geodata = {
 			"latitude": data.results[0].geometry.location.lat,
@@ -60,7 +65,12 @@ function get_LatitudeLongitude(element) {
 	});
 		
 	
-	url = make_url("url_osm",source);
+	geodata_osm= {
+			"address": source,
+			"key": "jerome.avond@alolise.org",
+			"format": "json"
+	}
+	url = make_url("url_osm",geodata_osm);
 	$.getJSON(url, function(data) {
 		geodata = {
 				"latitude": data[0].lat,
