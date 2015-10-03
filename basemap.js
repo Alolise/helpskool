@@ -1,4 +1,4 @@
-function valider() {
+function show_validation() {
 	document.getElementById("contenu").innerHTML=" Contenu Validé ";
 }
 function osmdiv(element) {
