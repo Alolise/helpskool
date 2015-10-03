@@ -4,26 +4,21 @@ function myelement(name) {
 function show_validation() {
 	myelement("contenu").innerHTML=" Contenu Validé ";
 }
-function make_url(address,type,key="",format="json") {
+function make_url(type,data) {
 	switch (type) {
-		case "osm":
+		case "url_osm":
 			url="http://nominatim.openstreetmap.org/search?";
 			key="email=jerome.avond@alolise.org";
 			format="format=json";
 			base= url + key + "&" + format + "&q=" + address;
 			break;
-		case "gmap":
+		case "url_gmap":
 			url="https://maps.googleapis.com/maps/api/geocode/";
 			key="key=AIzaSyBV0jQvMpkmQ2QINkntL7liDvooxYt-WfQ";
 			format="json?";
 			base= url + format + key + "&address=" + address; 
 			break;
-	}
-	return base;
-}
-function make_url_map(type,latitude,longitude,delta_vertical,delta_horizontal="") {
-	switch (type) {
-		case "osm":
+		case "map_osm":
 			url = "http://www.openstreetmap.org/export/embed.html?"
 			longitude_min=longitude - delta_horizontal;
 			latitude_min=latitude - delta_vertical;
@@ -52,25 +47,31 @@ function get_LatitudeLongitude(element) {
 
 	var xmlhttp = new XMLHttpRequest();
 
-	var url = make_url(source, "gmap");
+	var url = make_url("url_gmap",source);
 	$.getJSON(url, function(data) {
-		latitude=data.results[0].geometry.location.lat;
-		longitude=data.results[0].geometry.location.lng;
-		myelement("latdivgmap").innerHTML=latitude;
-		myelement("longdivgmap").innerHTML=longitude;
+		geodata = {
+			"latitude": data.results[0].geometry.location.lat,
+			"longitude": data.results[0].geometry.location.lng,
+			"delta_vertical": 0.05,
+			"delta_horizontal": 0.05
+		}
+		myelement("latdivgmap").innerHTML=geodata["latitude"];
+		myelement("longdivgmap").innerHTML=geodata["longitude"];
 	});
 		
 	
-	url = make_url(source, "osm");
+	url = make_url("url_osm",source);
 	$.getJSON(url, function(data) {
-		latitude=data[0].lat;
-		longitude=data[0].lon;
+		geodata = {
+				"latitude": data[0].lat,
+				"longitude": data[0].lon,
+				"delta_vertical": 0.05,
+				"delta_horizontal": 0.05
+		}
 		
-		myelement("latdivosm").innerHTML=latitude;
-		myelement("longdivosm").innerHTML=longitude;
-		delta_vertical=0.05;
-		delta_horizontal=0.05;
-		url = make_url_map("osm",latitude,longitude,delta_vertical,delta_horizontal);
+		myelement("latdivosm").innerHTML=geodata["latitude"];
+		myelement("longdivosm").innerHTML=geodata["longitude"];
+		url = make_url("map_osm",geodata);
 		myelement("carte").src=url;
 		myelement("contenu").innerHTML=url;
 
