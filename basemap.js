@@ -2,7 +2,7 @@ function myelement(name) {
 	return document.getElementById(name);
 }
 function show_validation() {
-	document.getElementById("contenu").innerHTML=" Contenu Validé ";
+	myelement("contenu").innerHTML=" Contenu Validé ";
 }
 function make_url(address,type,key="",format="json") {
 	switch (type) {
@@ -19,6 +19,23 @@ function make_url(address,type,key="",format="json") {
 			base= url + format + key + "&address=" + address; 
 			break;
 	}
+	return base;
+}
+function make_url_map(type,latitude,longitude,delta_vertical,delta_horizontal="") {
+	switch (type) {
+		case "osm":
+			url = "http://www.openstreetmap.org/export/embed.html?"
+			longitude_min=longitude - delta_horizontal;
+			latitude_min=latitude - delta_vertical;
+			longitude_max=longitude + delta_horizontal;
+			latitude_max=latitude + delta_vertical;
+			box = "bbox=" + longitude_min + "," + latitude_min + "," + longitude_max + "," + latitude_max;
+			layer = "&" + "layer=mapquest";
+			marker = "&" + "marker=" + latitude + "," + longitude;
+			break;
+			//maposm="http://api.openstreetmap.org/api/0.6/map?bbox="+bolon1+","+bolat2+","+bolon2+","+bolat3;
+	}
+	return base;
 }
 function get_LatitudeLongitude(element) {
 
@@ -39,36 +56,25 @@ function get_LatitudeLongitude(element) {
 	$.getJSON(url, function(data) {
 		latitude=data.results[0].geometry.location.lat;
 		longitude=data.results[0].geometry.location.lng;
-		document.getElementById("latdivgmap").innerHTML=latitude;
-		document.getElementById("longdivgmap").innerHTML=longitude;
+		myelement("latdivgmap").innerHTML=latitude;
+		myelement("longdivgmap").innerHTML=longitude;
 	});
 		
 	
 	url = make_url(source, "osm");
 	$.getJSON(url, function(data) {
-		olat=data[0].lat;
-		olon=data[0].lon;
-		deltav=0.05;
-		deltah=0.05;
-		bolon1=olon-deltah;
-		bolat1=olat-deltav;
-		bolon2=olon+deltah;
-		bolat2=olat+deltav;
+		latitude=data[0].lat;
+		longitude=data[0].lon;
 		
-		document.getElementById("latdivosm").innerHTML=olat;
-		document.getElementById("longdivosm").innerHTML=olon;
-		maposm="http://www.openstreetmap.org/export/embed.html?"
-			+"bbox="
-			+bolon1+","+bolat1+","+bolon2+","+bolat2
-			+"&amp;"
-			+"layer=mapquest"
-			+"&amp;"
-			+"marker="+olat+","+olon ;
-		//maposm="http://api.openstreetmap.org/api/0.6/map?bbox="+bolon1+","+bolat2+","+bolon2+","+bolat3;
-		document.getElementById("carte").src=maposm;
-		document.getElementById("contenu").innerHTML=maposm;
+		myelement("latdivosm").innerHTML=latitude;
+		myelement("longdivosm").innerHTML=longitude;
+		delta_vertical=0.05;
+		delta_horizontal=0.05;
+		url = make_url_map("osm",latitude,longitude,delta_vertical,delta_horizontal);
+		myelement("carte").src=url;
+		myelement("contenu").innerHTML=url;
 
-});
+	});
 
-	document.getElementById('carte').contentWindow.location.reload(true);
+//	myelement('carte').contentWindow.location.reload(true); can't no authorization
 }
