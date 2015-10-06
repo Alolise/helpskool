@@ -94,3 +94,4 @@ function get_LatitudeLongitude(element) {
 
 //	myelement('carte').contentWindow.location.reload(true); can't no authorization
 }
+
